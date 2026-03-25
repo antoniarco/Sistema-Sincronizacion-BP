@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema B — Control de modelos BP</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">Sistema B <span>v0.1.0</span></div>
+      <nav class="header-nav">
+        <button id="nav-dashboard" class="nav-btn active" onclick="navigate('dashboard')">📊 Modelos</button>
+        <button id="nav-settings" class="nav-btn" onclick="navigate('settings')">⚙️ Ajustes</button>
+      </nav>
+    </div>
+    <div class="header-user">
+      <span id="header-user-name"></span>
+    </div>
+  </header>
+
+  <main class="container" id="main-content">
+    <div class="loading"><div class="spinner"></div>Cargando...</div>
+  </main>
+
+  <!-- Push Modal -->
+  <div class="modal-overlay" id="push-modal">
+    <div class="modal">
+      <h2>📤 Subir cambios</h2>
+      <p>Describe brevemente que has cambiado. Este comentario queda en el historial.</p>
+      <input id="push-comment" type="text" placeholder='Ej: "ajuste EBITDA escenario moderado"' autofocus>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closePushModal()">Cancelar</button>
+        <button class="btn btn-green" onclick="doPush()">📤 Subir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div class="toast-container" id="toasts"></div>
+
+  <script src="/static/app.js"></script>
+  <script>
+    // Set user name in header after first API call
+    const origLoadDashboard = loadDashboard;
+    loadDashboard = async function() {
+      await origLoadDashboard();
+      const data = await fetch('/api/status').then(r => r.json()).catch(() => null);
+      if (data && data.user) {
+        document.getElementById('header-user-name').textContent = '👤 ' + data.user;
+      }
+    };
+  </script>
+</body>
+</html>
