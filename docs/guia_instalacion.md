@@ -20,12 +20,14 @@ Tiene dos formas de usarse:
 
 Pega un solo comando en la terminal y el sistema se descarga, instala y configura automaticamente.
 
+El admin te enviara un comando para pegar en la terminal. Es una sola linea que lo hace todo.
+
 ### macOS
 
-Abre **Terminal** (busca "Terminal" en Spotlight) y pega:
+Abre **Terminal** (busca "Terminal" en Spotlight) y pega el comando que te dio el admin:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/antoniarco/Sistema-Sincronizacion-BP/main/scripts/instalar-rapido-mac.sh | bash
+curl -fsSL https://raw.githubusercontent.com/antoniarco/Sistema-Sincronizacion-BP/main/scripts/instalar-rapido-mac.sh | bash -s -- TOKEN
 ```
 
 ### Windows
@@ -33,21 +35,36 @@ curl -fsSL https://raw.githubusercontent.com/antoniarco/Sistema-Sincronizacion-B
 Abre **PowerShell** (busca "PowerShell" en el menu Inicio) y pega:
 
 ```powershell
-irm https://raw.githubusercontent.com/antoniarco/Sistema-Sincronizacion-BP/main/scripts/instalar-rapido-windows.ps1 | iex
+$t="TOKEN"; irm https://raw.githubusercontent.com/antoniarco/Sistema-Sincronizacion-BP/main/scripts/instalar-rapido-windows.ps1 | iex
 ```
 
-### Que hace este comando
+> En ambos casos, `TOKEN` es una clave de acceso que el admin incluye en el comando. Tu no tienes que hacer nada con ella.
 
-El instalador automaticamente:
+### Que hace este comando
 
 1. Comprueba si tienes Python, Git y pipx (y los instala si faltan)
 2. Descarga Sistema B desde GitHub
 3. Instala el comando `bp` de forma global
-4. Lanza el asistente de configuracion (`bp setup`)
+4. Preconfigura la conexion al repositorio de modelos
+5. Lanza el asistente — solo te pide tu nombre y email
 
 Al terminar, cierra y abre la terminal y escribe `bp web` para empezar.
 
-> **Nota para el admin**: cambia `antoniarco` en las URLs por tu organizacion o usuario de GitHub real antes de enviar estos comandos a tu equipo.
+### Nota para el admin
+
+El comando que envias a tu equipo lleva el token de acceso al repo `bp-modelos`. El token nunca se sube a GitHub — va solo en el comando que copias/pegas. Ejemplo real:
+
+**macOS:**
+```
+curl -fsSL https://raw.githubusercontent.com/antoniarco/Sistema-Sincronizacion-BP/main/scripts/instalar-rapido-mac.sh | bash -s -- github_pat_XXXXX
+```
+
+**Windows:**
+```
+$t="github_pat_XXXXX"; irm https://raw.githubusercontent.com/antoniarco/Sistema-Sincronizacion-BP/main/scripts/instalar-rapido-windows.ps1 | iex
+```
+
+Sustituye `github_pat_XXXXX` por tu token real de GitHub (Fine-grained, con acceso Contents read/write a `bp-modelos`).
 
 ---
 
