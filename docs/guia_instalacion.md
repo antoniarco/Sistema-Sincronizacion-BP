@@ -25,7 +25,7 @@ Pega un solo comando en la terminal y el sistema se descarga, instala y configur
 Abre **Terminal** (busca "Terminal" en Spotlight) y pega:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/TU-ORGANIZACION/sistema-b/main/scripts/instalar-rapido-mac.sh | bash
+curl -fsSL https://raw.githubusercontent.com/antoniarco/sistema-b/main/scripts/instalar-rapido-mac.sh | bash
 ```
 
 ### Windows
@@ -33,7 +33,7 @@ curl -fsSL https://raw.githubusercontent.com/TU-ORGANIZACION/sistema-b/main/scri
 Abre **PowerShell** (busca "PowerShell" en el menu Inicio) y pega:
 
 ```powershell
-irm https://raw.githubusercontent.com/TU-ORGANIZACION/sistema-b/main/scripts/instalar-rapido-windows.ps1 | iex
+irm https://raw.githubusercontent.com/antoniarco/sistema-b/main/scripts/instalar-rapido-windows.ps1 | iex
 ```
 
 ### Que hace este comando
@@ -47,7 +47,7 @@ El instalador automaticamente:
 
 Al terminar, cierra y abre la terminal y escribe `bp web` para empezar.
 
-> **Nota para el admin**: cambia `TU-ORGANIZACION` en las URLs por tu organizacion o usuario de GitHub real antes de enviar estos comandos a tu equipo.
+> **Nota para el admin**: cambia `antoniarco` en las URLs por tu organizacion o usuario de GitHub real antes de enviar estos comandos a tu equipo.
 
 ---
 
@@ -144,7 +144,7 @@ pip3 install pipx && pipx ensurepath
 
 ```bash
 # Desde GitHub
-pipx install git+https://github.com/TU-ORGANIZACION/sistema-b.git
+pipx install git+https://github.com/antoniarco/sistema-b.git
 
 # O desde una carpeta local
 pipx install /ruta/a/sistema-b          # macOS/Linux
@@ -397,7 +397,7 @@ Antes de enviar las instrucciones a tu equipo, necesitas:
 
 1. **Crear el repositorio central** de modelos BP (ejecuta `scripts/setup_repo.sh` o `setup_repo.ps1`)
 2. **Subir sistema-b a GitHub** (repo privado de tu organizacion)
-3. **Cambiar `TU-ORGANIZACION`** en los comandos de instalacion rapida por tu org/usuario real
+3. **Cambiar `antoniarco`** en los comandos de instalacion rapida por tu org/usuario real
 4. **Crear el webhook de Slack** y anotar la URL
 5. **Enviar a tu equipo** el comando de instalacion (una linea) junto con:
    - La URL del repositorio de modelos BP
