@@ -2,23 +2,29 @@
 # ╔══════════════════════════════════════════════════════════════════╗
 # ║  Sistema B — Instalacion rapida para macOS                      ║
 # ║                                                                  ║
-# ║  Pega esto en Terminal:                                          ║
-# ║  curl -fsSL URL_DEL_SCRIPT | bash                               ║
+# ║  El admin envia este comando al equipo:                          ║
+# ║  curl -fsSL URL | bash -s -- TOKEN                               ║
 # ╚══════════════════════════════════════════════════════════════════╝
 
 set -e
 
-# ── Configuracion (el admin rellena esto una vez) ─────────────
-GITHUB_TOKEN="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"
+# ── Token recibido como parametro ─────────────────────────────
+GITHUB_TOKEN="${1:-}"
 GITHUB_OWNER="antoniarco"
 
-# Repo del TOOL (sistema-b) — se descarga con gh auth o HTTPS publico
-TOOL_REPO="https://github.com/${GITHUB_OWNER}/Sistema-Sincronizacion-BP.git"
-# Repo de los MODELOS BP — acceso via token (privado)
-MODELS_REPO="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/bp-modelos.git"
+if [ -z "$GITHUB_TOKEN" ]; then
+    echo ""
+    echo "  ❌ Falta el token de acceso."
+    echo ""
+    echo "  Uso correcto (pide el comando completo a tu admin):"
+    echo "  curl -fsSL URL | bash -s -- TU_TOKEN"
+    echo ""
+    exit 1
+fi
 
+TOOL_REPO="https://github.com/${GITHUB_OWNER}/Sistema-Sincronizacion-BP.git"
+MODELS_REPO="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/bp-modelos.git"
 INSTALL_DIR="$HOME/.sistema-b-installer"
-# ──────────────────────────────────────────────────────────────
 
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -42,15 +48,12 @@ echo ""
 echo -e "  ${YELLOW}Pulsa Enter para continuar o Ctrl+C para cancelar...${NC}"
 read -r
 
-# ── Funciones ─────────────────────────────────────────────────
-
 paso() { echo ""; echo -e "  ${CYAN}[$1/6]${NC} ${BOLD}$2${NC}"; }
 ok()   { echo -e "  ${GREEN}✅ $1${NC}"; }
 skip() { echo -e "  ${GREEN}✓ $1 (ya instalado)${NC}"; }
 fail() { echo -e "  ${RED}❌ $1${NC}"; echo -e "  ${YELLOW}$2${NC}"; echo ""; echo "  Pulsa Enter para cerrar..."; read -r; exit 1; }
 
 # ── Paso 1: Homebrew ──────────────────────────────────────────
-
 paso "1" "Comprobando Homebrew..."
 if command -v brew &>/dev/null; then
     skip "Homebrew encontrado"
@@ -63,7 +66,6 @@ else
 fi
 
 # ── Paso 2: Python ────────────────────────────────────────────
-
 paso "2" "Comprobando Python..."
 PY_OK=false
 for cmd in python3 python; do
@@ -78,7 +80,6 @@ if [ "$PY_OK" = false ]; then
 fi
 
 # ── Paso 3: Git ───────────────────────────────────────────────
-
 paso "3" "Comprobando Git..."
 if command -v git &>/dev/null; then
     skip "Git $(git --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')"
@@ -87,7 +88,6 @@ else
 fi
 
 # ── Paso 4: pipx ─────────────────────────────────────────────
-
 paso "4" "Comprobando pipx..."
 if command -v pipx &>/dev/null; then
     skip "pipx encontrado"
@@ -97,7 +97,6 @@ else
 fi
 
 # ── Paso 5: Descargar e instalar Sistema B ────────────────────
-
 paso "5" "Descargando e instalando Sistema B..."
 rm -rf "$INSTALL_DIR"
 git clone --depth 1 "$TOOL_REPO" "$INSTALL_DIR" 2>/dev/null
@@ -106,22 +105,13 @@ git clone --depth 1 "$TOOL_REPO" "$INSTALL_DIR" 2>/dev/null
 pipx install "$INSTALL_DIR" --force 2>/dev/null
 export PATH="$HOME/.local/bin:$PATH"
 command -v bp &>/dev/null && ok "Sistema B instalado" || fail "No se pudo instalar el comando 'bp'" ""
-
 rm -rf "$INSTALL_DIR"
 
-# ── Paso 6: Configuracion automatica ─────────────────────────
-
+# ── Paso 6: Configuracion ────────────────────────────────────
 paso "6" "Configurando Sistema B..."
-echo ""
-echo -e "  ${BOLD}Responde las siguientes preguntas:${NC}"
-echo -e "  ${YELLOW}(La URL del repositorio ya esta preconfigurada)${NC}"
-echo ""
 
-# Pre-crear config con el repo ya configurado para que bp setup lo use como default
 CONFIG_DIR="$HOME/.config/bp"
 mkdir -p "$CONFIG_DIR"
-
-# Solo pre-configurar si no existe config
 if [ ! -f "$CONFIG_DIR/config.toml" ]; then
     cat > "$CONFIG_DIR/config.toml" << TOML
 [user]
@@ -144,10 +134,14 @@ auto_liberar_tras_push = true
 TOML
 fi
 
+echo ""
+echo -e "  ${BOLD}Responde las siguientes preguntas:${NC}"
+echo -e "  ${YELLOW}(La conexion al repositorio ya esta configurada)${NC}"
+echo ""
+
 bp setup
 
 # ── Fin ───────────────────────────────────────────────────────
-
 echo ""
 echo -e "${GREEN}╔═══════════════════════════════════════════════════════╗${NC}"
 echo -e "${GREEN}║                                                       ║${NC}"

@@ -8,7 +8,8 @@ setlocal EnableDelayedExpansion
 :: ╚═══════════════════════════════════════════════════════════════╝
 
 :: ── Configuracion del acceso ─────────────────────────────────
-set "GITHUB_TOKEN=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"
+:: ADMIN: Pon aqui el token antes de enviar el .zip al equipo
+set "GITHUB_TOKEN=PEGA_TU_TOKEN_AQUI"
 set "GITHUB_OWNER=antoniarco"
 set "MODELS_REPO=https://x-access-token:!GITHUB_TOKEN!@github.com/!GITHUB_OWNER!/bp-modelos.git"
 :: ─────────────────────────────────────────────────────────────
