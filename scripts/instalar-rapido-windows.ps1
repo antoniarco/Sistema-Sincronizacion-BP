@@ -12,7 +12,7 @@ $ErrorActionPreference = "Stop"
 $GITHUB_TOKEN = "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"
 $GITHUB_OWNER = "antoniarco"
 
-$TOOL_REPO = "https://github.com/${GITHUB_OWNER}/sistema-b.git"
+$TOOL_REPO = "https://github.com/${GITHUB_OWNER}/Sistema-Sincronizacion-BP.git"
 $MODELS_REPO = "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/bp-modelos.git"
 
 $INSTALL_DIR = "$env:TEMP\sistema-b-installer"

@@ -25,7 +25,7 @@ Pega un solo comando en la terminal y el sistema se descarga, instala y configur
 Abre **Terminal** (busca "Terminal" en Spotlight) y pega:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/antoniarco/sistema-b/main/scripts/instalar-rapido-mac.sh | bash
+curl -fsSL https://raw.githubusercontent.com/antoniarco/Sistema-Sincronizacion-BP/main/scripts/instalar-rapido-mac.sh | bash
 ```
 
 ### Windows
@@ -33,7 +33,7 @@ curl -fsSL https://raw.githubusercontent.com/antoniarco/sistema-b/main/scripts/i
 Abre **PowerShell** (busca "PowerShell" en el menu Inicio) y pega:
 
 ```powershell
-irm https://raw.githubusercontent.com/antoniarco/sistema-b/main/scripts/instalar-rapido-windows.ps1 | iex
+irm https://raw.githubusercontent.com/antoniarco/Sistema-Sincronizacion-BP/main/scripts/instalar-rapido-windows.ps1 | iex
 ```
 
 ### Que hace este comando
@@ -144,7 +144,7 @@ pip3 install pipx && pipx ensurepath
 
 ```bash
 # Desde GitHub
-pipx install git+https://github.com/antoniarco/sistema-b.git
+pipx install git+https://github.com/antoniarco/Sistema-Sincronizacion-BP.git
 
 # O desde una carpeta local
 pipx install /ruta/a/sistema-b          # macOS/Linux

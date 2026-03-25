@@ -13,7 +13,7 @@ GITHUB_TOKEN="github_pat_11AAT6QAA0eYkeU6M9rdY6_8qs8RGSN6Np5oxlbCvvTYOJqQxxsdUR4
 GITHUB_OWNER="antoniarco"
 
 # Repo del TOOL (sistema-b) — se descarga con gh auth o HTTPS publico
-TOOL_REPO="https://github.com/${GITHUB_OWNER}/sistema-b.git"
+TOOL_REPO="https://github.com/${GITHUB_OWNER}/Sistema-Sincronizacion-BP.git"
 # Repo de los MODELOS BP — acceso via token (privado)
 MODELS_REPO="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/bp-modelos.git"
 
